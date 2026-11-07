@@ -45,7 +45,7 @@ export function AiSettingsPlayground({ initialConfig, hasApiKey }: AiSettingsPla
   >([
     {
       role: 'assistant',
-      content: '¡Hola! Soy Esteban, Asistente Virtual Oficial de daniautoma. ¿En qué puedo ayudarte hoy?',
+      content: '¡Hola! Soy Sofía, la asistente virtual de la Clínica Dental Dra. Bianca. ¿En qué puedo ayudarte hoy?',
     },
   ]);
   const [inputMessage, setInputMessage] = useState('');
@@ -288,7 +288,7 @@ export function AiSettingsPlayground({ initialConfig, hasApiKey }: AiSettingsPla
                 setChatMessages([
                   {
                     role: 'assistant',
-                    content: '¡Hola! Soy Esteban, Asistente Virtual Oficial de daniautoma. ¿En qué puedo ayudarte hoy?',
+                    content: '¡Hola! Soy Sofía, la asistente virtual de la Clínica Dental Dra. Bianca. ¿En qué puedo ayudarte hoy?',
                   },
                 ])
               }
@@ -377,9 +377,9 @@ export function AiSettingsPlayground({ initialConfig, hasApiKey }: AiSettingsPla
             {isSimulating && (
               <div className="flex gap-2.5 items-center text-xs text-slate-400 italic">
                 <div className="w-7 h-7 rounded-full bg-brand-600 text-white flex items-center justify-center shrink-0 text-xs font-bold animate-pulse">
-                  E
+                  S
                 </div>
-                <span>Esteban (IA) está pensando y verificando disponibilidad de llamadas...</span>
+                <span>Sofía (IA) está pensando y verificando disponibilidad de citas...</span>
               </div>
             )}
           </div>
@@ -395,7 +395,7 @@ export function AiSettingsPlayground({ initialConfig, hasApiKey }: AiSettingsPla
             >
               <input
                 type="text"
-                placeholder="Escribe un mensaje de cliente para probar a Esteban..."
+                placeholder="Escribe un mensaje de paciente para probar a Sofía..."
                 value={inputMessage}
                 disabled={isSimulating}
                 onChange={(e) => setInputMessage(e.target.value)}

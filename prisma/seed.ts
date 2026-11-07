@@ -4,44 +4,44 @@ import bcrypt from 'bcryptjs';
 const prisma = new PrismaClient();
 
 async function main() {
-  console.log('🌱 Iniciando seed de la base de datos de daniautoma...');
+  console.log('🌱 Iniciando seed de la base de datos de Clínica Dental Dra. Bianca...');
 
-  const adminEmail = process.env.ADMIN_EMAIL || 'admin@daniautoma.cloud';
-  const adminPassword = process.env.ADMIN_PASSWORD || 'AdminAutoma2025!';
+  const adminEmail = process.env.ADMIN_EMAIL || 'admin@drabianca.daniautoma.cloud';
+  const adminPassword = process.env.ADMIN_PASSWORD || 'AdminDental2025!';
 
-  // 1. Configuración de la Agencia
+  // 1. Configuración de la Clínica
   await prisma.clinicConfig.upsert({
     where: { id: 'clinic_default' },
     create: {
       id: 'clinic_default',
-      clinicName: 'daniautoma (Agencia de Automatización e Inteligencia Artificial)',
-      clinicAddress: 'San Salvador, El Salvador • Servicios Digitales Globales',
+      clinicName: 'Clínica Dental Dra. Bianca',
+      clinicAddress: 'San Salvador, El Salvador • Odontología Especializada & Estética Dental',
       clinicPhone: '+50370000000',
-      parkingInfo: 'Reuniones virtuales vía Google Meet / Zoom o presenciales con cita previa.',
+      parkingInfo: 'Estacionamiento privado disponible para pacientes en las instalaciones de la clínica.',
       holidaysJson: JSON.stringify(['2025-01-01', '2025-05-01', '2025-08-05', '2025-08-06', '2025-09-15', '2025-11-02', '2025-12-25']),
       aiModel: 'google/gemini-2.5-flash',
       aiTemperature: 0.2,
       aiBufferSeconds: 8,
-      aiSystemPrompt: `Eres Esteban, el asistente virtual de daniautoma, una agencia experta en automatización con inteligencia artificial, agentes de WhatsApp y desarrollo web para negocios. Tu objetivo es saludar al cliente, explicar brevemente nuestros servicios, responder preguntas frecuentes sobre cómo la IA ayuda a conseguir más clientes y agendar una llamada de valoración estratégica de 30 minutos en nuestro calendario. Sé conciso y utiliza emojis de forma moderada. Si el usuario solicita hablar con una persona real o tiene un requerimiento técnico complejo, deriva la conversación inmediatamente a un agente humano.`,
+      aiSystemPrompt: `Eres Sofía, la asistente virtual de la Clínica Dental Dra. Bianca. Tu objetivo es saludar al paciente, ofrecer información sobre nuestros servicios odontológicos, responder dudas frecuentes sobre tratamientos o dolor, y agendar una cita de valoración en nuestro calendario. Mantén un tono cálido y profesional.`,
       aiIsGloballyActive: true,
       whatsappSessionStatus: 'DISCONNECTED',
     },
     update: {
-      clinicName: 'daniautoma (Agencia de Automatización e Inteligencia Artificial)',
-      clinicAddress: 'San Salvador, El Salvador • Servicios Digitales Globales',
+      clinicName: 'Clínica Dental Dra. Bianca',
+      clinicAddress: 'San Salvador, El Salvador • Odontología Especializada & Estética Dental',
       clinicPhone: '+50370000000',
-      parkingInfo: 'Reuniones virtuales vía Google Meet / Zoom o presenciales con cita previa.',
-      aiSystemPrompt: `Eres Esteban, el asistente virtual de daniautoma, una agencia experta en automatización con inteligencia artificial, agentes de WhatsApp y desarrollo web para negocios. Tu objetivo es saludar al cliente, explicar brevemente nuestros servicios, responder preguntas frecuentes sobre cómo la IA ayuda a conseguir más clientes y agendar una llamada de valoración estratégica de 30 minutos en nuestro calendario. Sé conciso y utiliza emojis de forma moderada. Si el usuario solicita hablar con una persona real o tiene un requerimiento técnico complejo, deriva la conversación inmediatamente a un agente humano.`,
+      parkingInfo: 'Estacionamiento privado disponible para pacientes en las instalaciones de la clínica.',
+      aiSystemPrompt: `Eres Sofía, la asistente virtual de la Clínica Dental Dra. Bianca. Tu objetivo es saludar al paciente, ofrecer información sobre nuestros servicios odontológicos, responder dudas frecuentes sobre tratamientos o dolor, y agendar una cita de valoración en nuestro calendario. Mantén un tono cálido y profesional.`,
     },
   });
-  console.log('✅ Configuración de la agencia guardada.');
+  console.log('✅ Configuración de la clínica guardada.');
 
   // 2. Administrador General
   const hashedAdminPassword = await bcrypt.hash(adminPassword, 10);
   await prisma.user.upsert({
     where: { email: adminEmail },
     create: {
-      name: 'Admin daniautoma',
+      name: 'Admin Clínica Dental',
       email: adminEmail,
       passwordHash: hashedAdminPassword,
       role: 'ADMIN',
@@ -49,7 +49,7 @@ async function main() {
       phone: '+50370000001',
     },
     update: {
-      name: 'Admin daniautoma',
+      name: 'Admin Clínica Dental',
       passwordHash: hashedAdminPassword,
       role: 'ADMIN',
       isActive: true,
@@ -57,13 +57,13 @@ async function main() {
   });
   console.log(`✅ Usuario Administrador configurado: ${adminEmail}`);
 
-  // 3. Asistente de Operaciones
-  const opsEmail = 'operaciones@daniautoma.cloud';
-  const hashedOpsPassword = await bcrypt.hash('Operaciones2025!', 10);
+  // 3. Recepción y Asistente de Citas
+  const opsEmail = 'recepcion@drabianca.daniautoma.cloud';
+  const hashedOpsPassword = await bcrypt.hash('Recepcion2025!', 10);
   await prisma.user.upsert({
     where: { email: opsEmail },
     create: {
-      name: 'Operaciones y Soporte',
+      name: 'Recepción y Citas',
       email: opsEmail,
       passwordHash: hashedOpsPassword,
       role: 'RECEPTIONIST',
@@ -71,40 +71,40 @@ async function main() {
       phone: '+50370000002',
     },
     update: {
-      name: 'Operaciones y Soporte',
+      name: 'Recepción y Citas',
       role: 'RECEPTIONIST',
       isActive: true,
     },
   });
-  console.log(`✅ Asistente de Operaciones configurado: ${opsEmail}`);
+  console.log(`✅ Recepción configurada: ${opsEmail}`);
 
-  // 4. Consultor Principal / Especialista en IA (Dani)
-  const consultantEmail = 'dani@daniautoma.cloud';
-  const hashedConsultantPassword = await bcrypt.hash('Dani2025!', 10);
-  const consultantUser = await prisma.user.upsert({
-    where: { email: consultantEmail },
+  // 4. Odontóloga Principal (Dra. Bianca)
+  const dentistEmail = 'dra.bianca@drabianca.daniautoma.cloud';
+  const hashedDentistPassword = await bcrypt.hash('DraBianca2025!', 10);
+  const dentistUser = await prisma.user.upsert({
+    where: { email: dentistEmail },
     create: {
-      name: 'Dani (Consultor Principal IA)',
-      email: consultantEmail,
-      passwordHash: hashedConsultantPassword,
+      name: 'Dra. Bianca (Especialista Dental)',
+      email: dentistEmail,
+      passwordHash: hashedDentistPassword,
       role: 'DENTIST',
       isActive: true,
       phone: '+50370000003',
     },
     update: {
-      name: 'Dani (Consultor Principal IA)',
+      name: 'Dra. Bianca (Especialista Dental)',
       role: 'DENTIST',
       isActive: true,
     },
   });
-  console.log(`✅ Consultor Principal configurado: ${consultantEmail}`);
+  console.log(`✅ Odontóloga Principal configurada: ${dentistEmail}`);
 
-  // Perfil Profesional / Horarios del Consultor
+  // Perfil Profesional / Horarios de la Dra. Bianca
   const professional = await prisma.professional.upsert({
-    where: { userId: consultantUser.id },
+    where: { userId: dentistUser.id },
     create: {
-      userId: consultantUser.id,
-      specialty: 'Consultoría en IA y Automatización con n8n',
+      userId: dentistUser.id,
+      specialty: 'Odontología Especializada & Estética Dental',
       activeDays: '1,2,3,4,5', // Lunes a Viernes
       startHour: '08:00',
       endHour: '18:00',
@@ -113,7 +113,7 @@ async function main() {
       slotIntervalMin: 30,
     },
     update: {
-      specialty: 'Consultoría en IA y Automatización con n8n',
+      specialty: 'Odontología Especializada & Estética Dental',
       activeDays: '1,2,3,4,5',
       startHour: '08:00',
       endHour: '18:00',
@@ -122,43 +122,45 @@ async function main() {
       slotIntervalMin: 30,
     },
   });
-  console.log('✅ Perfil y disponibilidad laboral de consultoría guardados (L-V 08:00-18:00).');
+  console.log('✅ Perfil y disponibilidad de la Dra. Bianca guardados (L-V 08:00-18:00).');
 
-  // 5. Catálogo de Servicios de daniautoma
+  // 5. Catálogo de Servicios Dentales
   const defaultServices = [
     {
-      name: 'Agente de WhatsApp con IA & CRM',
-      category: 'Agentes IA',
-      description: 'Agente conversacional conectado a WhatsApp que agenda citas, resuelve dudas y cualifica clientes 24/7. Incluye panel de gestión.',
+      name: 'Valoración Odontológica Inicial',
+      category: 'Diagnóstico',
+      description: 'Examen general y diagnóstico de salud bucal.',
       durationMinutes: 30,
-      price: 250.0,
+      price: 25.0,
       isPriceVariable: false,
     },
     {
-      name: 'Automatizaciones de Procesos con n8n',
-      category: 'Automatización',
-      description: 'Creación de flujos de trabajo automatizados entre aplicaciones (Google Sheets, CRMs, Email, Webhooks).',
-      durationMinutes: 30,
-      price: 150.0,
-      isPriceVariable: false,
-    },
-    {
-      name: 'Desarrollo de Landing Page Optimizada',
-      category: 'Desarrollo Web',
-      description: 'Sitios web ultra-rápidos de alta conversión con integración a WhatsApp y formularios.',
-      durationMinutes: 30,
-      price: 200.0,
-      isPriceVariable: false,
-    },
-    {
-      name: 'Consultoría de IA & Diagnóstico Digital',
-      category: 'Consultoría',
-      description: 'Sesión estratégica de 45 minutos para identificar puntos de automatización en el negocio del cliente. Requiere valoración previa.',
+      name: 'Limpieza Dental Ultrasónica & Pulido',
+      category: 'Higiene',
+      description: 'Eliminación de sarro y placa con ultrasonido y pulido coronario.',
       durationMinutes: 45,
-      price: 0.0,
-      isPriceVariable: true,
+      price: 45.0,
+      isPriceVariable: false,
+    },
+    {
+      name: 'Blanqueamiento Dental LED',
+      category: 'Estética',
+      description: 'Tratamiento estético de aclarado dental con luz fría LED.',
+      durationMinutes: 60,
+      price: 120.0,
+      isPriceVariable: false,
+    },
+    {
+      name: 'Consulta de Ortodoncia / Brackets',
+      category: 'Ortodoncia',
+      description: 'Evaluación y plan de tratamiento para alineación dental.',
+      durationMinutes: 30,
+      price: 30.0,
+      isPriceVariable: false,
     },
   ];
+
+  const createdServices: Record<string, string> = {};
 
   for (const s of defaultServices) {
     const existing = await prisma.service.findFirst({ where: { name: s.name } });
@@ -175,7 +177,8 @@ async function main() {
       console.log(`ℹ️ Servicio actualizado: ${s.name}`);
     }
 
-    if (serviceId && professional) {
+    if (serviceId) {
+      createdServices[s.name] = serviceId;
       await prisma.professionalService.upsert({
         where: {
           professionalId_serviceId: {
@@ -192,46 +195,118 @@ async function main() {
     }
   }
 
-  // 6. Contactos / Potenciales de ejemplo para pruebas de agencia
-  const lead1 = await prisma.patient.upsert({
+  // 6. Pacientes de demostración
+  const patient1 = await prisma.patient.upsert({
     where: { phoneNormalized: '+50378901234' },
     create: {
-      fullName: 'Carlos Rivas (Clínica Médica Santa Fe)',
+      fullName: 'Andrea Mendoza',
       phoneNormalized: '+50378901234',
-      email: 'carlos.rivas@negocioprueba.sv',
-      tags: 'Lead Calificado,WhatsApp IA',
-      generalNotes: 'Interesado en implementar agente de WhatsApp para agendamiento de pacientes y recordatorios automáticos.',
+      email: 'andrea.mendoza@email.com',
+      tags: 'Nuevo,Blanqueamiento',
+      generalNotes: 'Interesada en blanqueamiento dental LED para evento próximo.',
       reminderPreference: 'WHATSAPP',
     },
     update: {
-      fullName: 'Carlos Rivas (Clínica Médica Santa Fe)',
-      tags: 'Lead Calificado,WhatsApp IA',
-      generalNotes: 'Interesado en implementar agente de WhatsApp para agendamiento de pacientes y recordatorios automáticos.',
+      fullName: 'Andrea Mendoza',
+      tags: 'Nuevo,Blanqueamiento',
+      generalNotes: 'Interesada en blanqueamiento dental LED para evento próximo.',
     },
   });
 
-  const lead2 = await prisma.patient.upsert({
+  const patient2 = await prisma.patient.upsert({
     where: { phoneNormalized: '+50371234567' },
     create: {
-      fullName: 'Mariana López (Comercial El Roble)',
+      fullName: 'Roberto Gómez',
       phoneNormalized: '+50371234567',
-      email: 'mariana.lopez@elroble.com',
-      tags: 'Prospecto,n8n Automatización',
-      generalNotes: 'Requiere sincronización de pedidos entre Shopify, Google Sheets y avisos al equipo de despacho por WhatsApp.',
+      email: 'roberto.gomez@email.com',
+      tags: 'Control,Limpieza',
+      generalNotes: 'Limpieza ultrasónica periódica y revisión preventiva.',
       reminderPreference: 'WHATSAPP',
     },
     update: {
-      fullName: 'Mariana López (Comercial El Roble)',
-      tags: 'Prospecto,n8n Automatización',
-      generalNotes: 'Requiere sincronización de pedidos entre Shopify, Google Sheets y avisos al equipo de despacho por WhatsApp.',
+      fullName: 'Roberto Gómez',
+      tags: 'Control,Limpieza',
+      generalNotes: 'Limpieza ultrasónica periódica y revisión preventiva.',
     },
   });
 
-  // Conversación de ejemplo en bandeja
+  const patient3 = await prisma.patient.upsert({
+    where: { phoneNormalized: '+50372345678' },
+    create: {
+      fullName: 'Valeria Castillo',
+      phoneNormalized: '+50372345678',
+      email: 'valeria.castillo@email.com',
+      tags: 'Ortodoncia,Evaluación',
+      generalNotes: 'Consulta de valoración para inicio de tratamiento de ortodoncia con brackets.',
+      reminderPreference: 'WHATSAPP',
+    },
+    update: {
+      fullName: 'Valeria Castillo',
+      tags: 'Ortodoncia,Evaluación',
+      generalNotes: 'Consulta de valoración para inicio de tratamiento de ortodoncia con brackets.',
+    },
+  });
+
+  // 7. Citas de demostración en el calendario
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  tomorrow.setHours(9, 0, 0, 0);
+
+  const tomorrowEnd = new Date(tomorrow);
+  tomorrowEnd.setMinutes(tomorrowEnd.getMinutes() + 60);
+
+  const dayAfter = new Date();
+  dayAfter.setDate(dayAfter.getDate() + 2);
+  dayAfter.setHours(10, 0, 0, 0);
+
+  const dayAfterEnd = new Date(dayAfter);
+  dayAfterEnd.setMinutes(dayAfterEnd.getMinutes() + 45);
+
+  const existingAppt1 = await prisma.appointment.findFirst({
+    where: { patientId: patient1.id },
+  });
+
+  if (!existingAppt1 && createdServices['Blanqueamiento Dental LED']) {
+    await prisma.appointment.create({
+      data: {
+        patientId: patient1.id,
+        professionalId: dentistUser.id,
+        serviceId: createdServices['Blanqueamiento Dental LED'],
+        startTime: tomorrow,
+        endTime: tomorrowEnd,
+        status: 'CONFIRMED',
+        origin: 'WHATSAPP_AI',
+        adminNotes: 'Cita agendada vía WhatsApp con asistente Sofía.',
+      },
+    });
+    console.log('✅ Cita de prueba 1 creada para Andrea Mendoza.');
+  }
+
+  const existingAppt2 = await prisma.appointment.findFirst({
+    where: { patientId: patient2.id },
+  });
+
+  if (!existingAppt2 && createdServices['Limpieza Dental Ultrasónica & Pulido']) {
+    await prisma.appointment.create({
+      data: {
+        patientId: patient2.id,
+        professionalId: dentistUser.id,
+        serviceId: createdServices['Limpieza Dental Ultrasónica & Pulido'],
+        startTime: dayAfter,
+        endTime: dayAfterEnd,
+        status: 'CONFIRMED',
+        origin: 'RECEPTION',
+        adminNotes: 'Control semestral de higiene dental.',
+      },
+    });
+    console.log('✅ Cita de prueba 2 creada para Roberto Gómez.');
+  }
+
+  // 8. Conversación de ejemplo en bandeja de WhatsApp
   const conv1 = await prisma.conversation.upsert({
     where: { whatsappJid: '50378901234@s.whatsapp.net' },
     create: {
-      patientId: lead1.id,
+      patientId: patient1.id,
       whatsappJid: '50378901234@s.whatsapp.net',
       status: 'OPEN',
       isAiActive: true,
@@ -242,7 +317,6 @@ async function main() {
     },
   });
 
-  // Mensaje de saludo inicial de prueba si no existen mensajes
   const existingMsgCount = await prisma.message.count({
     where: { conversationId: conv1.id },
   });
@@ -252,8 +326,8 @@ async function main() {
       data: {
         conversationId: conv1.id,
         senderType: 'PATIENT',
-        senderName: 'Carlos Rivas',
-        text: '¡Hola! Me gustaría saber cómo funciona el Agente de WhatsApp con IA para mi clínica y agendar una llamada.',
+        senderName: 'Andrea Mendoza',
+        text: '¡Hola! Quisiera saber el precio y duración del blanqueamiento dental LED y qué días tienen disponible.',
         status: 'RECEIVED',
       },
     });
@@ -262,14 +336,14 @@ async function main() {
       data: {
         conversationId: conv1.id,
         senderType: 'AI',
-        senderName: 'Esteban (daniautoma)',
-        text: '¡Hola Carlos! 👋 Con gusto. En daniautoma desarrollamos agentes con inteligencia artificial conectados a WhatsApp que atienden 24/7, responden consultas y agendan citas automáticamente en tu calendario. ¿Te gustaría agendar una llamada de valoración estratégica de 30 minutos esta semana?',
+        senderName: 'Sofía (Dra. Bianca)',
+        text: '¡Hola Andrea! 😊 Con gusto. Nuestro tratamiento de **Blanqueamiento Dental LED** tiene un valor de $120 USD y una duración aproximada de 60 minutos con resultados inmediatos ✨. Contamos con citas disponibles con la Dra. Bianca de lunes a viernes entre 08:00 AM y 06:00 PM. ¿Te gustaría agendar una cita para esta semana?',
         status: 'DELIVERED',
       },
     });
   }
 
-  console.log('🚀 Seed de daniautoma completado exitosamente.');
+  console.log('🚀 Seed de Clínica Dental Dra. Bianca completado exitosamente.');
 }
 
 main()

@@ -28,7 +28,7 @@ export default async function SettingsPage() {
           Centro de Control y Configuración
         </h1>
         <p className="text-xs text-slate-500 mt-1">
-          Gestión exclusiva de Administrador: Vinculación de WhatsApp, Agente Autónomo de IA (Esteban) con Simulador y Equipo.
+          Gestión exclusiva de Administrador: Vinculación de WhatsApp, Agente Autónomo de IA (Sofía) con Simulador y Equipo.
         </p>
       </div>
 

@@ -179,7 +179,7 @@ async function processBufferedMessages(conversationId: string, patientPhone: str
           conversationId,
           text: finalAnswer,
           senderType: "AI",
-          senderName: "Esteban (daniautoma)",
+          senderName: "Sofía (Dra. Bianca)",
           status: "DELIVERED",
         },
       });

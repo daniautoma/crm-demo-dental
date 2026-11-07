@@ -463,7 +463,7 @@ export function ChatInbox({ initialConversations, currentUserName: _currentUserN
                       <div key={'msg_' + item.id} className="flex flex-col items-end ml-auto max-w-[78%]">
                         <div className="bg-purple-600 text-white p-3.5 rounded-2xl rounded-tr-sm text-xs shadow-xs leading-relaxed">
                           <div className="flex items-center gap-1 text-[10px] text-purple-200 mb-1 font-semibold">
-                            <Bot className="w-3 h-3" /> Asistente IA Esteban (daniautoma)
+                            <Bot className="w-3 h-3" /> Asistente IA Sofía (Dra. Bianca)
                           </div>
                           {item.text}
                         </div>

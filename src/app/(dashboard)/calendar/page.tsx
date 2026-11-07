@@ -55,10 +55,10 @@ export default async function CalendarPage() {
     <div className="space-y-6 max-w-7xl mx-auto">
       <div>
         <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
-          Calendario de Llamadas Estratégicas y Consultoría
+          Calendario de Citas Odontológicas
         </h1>
         <p className="text-xs text-slate-500 mt-1">
-          Agenda oficial de llamadas de valoración y consultoría con garantía matemática de cero colisiones.
+          Agenda oficial de citas y tratamientos de la clínica con asignación de horarios y disponibilidad de la Dra. Bianca.
         </p>
       </div>
 

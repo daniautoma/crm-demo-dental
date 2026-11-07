@@ -113,7 +113,7 @@ class BaileysService {
           this.reconnectAttempts = 0;
           const userJid = this.socket?.user?.id || '';
           const rawPhone = userJid.split(':')[0] || userJid.split('@')[0];
-          const connectedPhone = rawPhone ? `+${rawPhone}` : 'daniautoma';
+          const connectedPhone = rawPhone ? `+${rawPhone}` : 'Clínica Dental Dra. Bianca';
 
           await prisma.clinicConfig.update({
             where: { id: 'clinic_default' },
