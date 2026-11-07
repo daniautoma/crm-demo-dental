@@ -1,5 +1,5 @@
 # ========================================================
-# Dockerfile para Dokploy - CRM daniautoma AI & WhatsApp
+# Dockerfile para Dokploy - CRM Clínica Dental Dra. Bianca
 # ========================================================
 
 FROM node:22-alpine AS runner
